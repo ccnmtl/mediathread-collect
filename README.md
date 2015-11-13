@@ -1,4 +1,7 @@
 # mediathread-collect
+
+[![Build Status](https://travis-ci.org/ccnmtl/mediathread-collect.svg?branch=master)](https://travis-ci.org/ccnmtl/mediathread-collect)
+
 Common code for the Chrome, Safari, and Firefox extensions for Mediathread
 
 HOW IT IS RUN:
