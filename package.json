@@ -1,0 +1,28 @@
+{
+  "name": "mediathread-collect",
+  "version": "1.0.0",
+  "description": "Asset collection library for Mediathread",
+  "main": "src/collect.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "jsdom": "^7.0.2",
+    "jshint": "^2.8.0",
+    "mocha": "^2.3.4"
+  },
+  "scripts": {
+    "pretest": "jshint src/*.js tests/*.js",
+    "test": "mocha tests/ -t 18000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccnmtl/mediathread-collect.git"
+  },
+  "author": "Columbia University's Center for Teaching and Learning",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/ccnmtl/mediathread-collect/issues"
+  },
+  "homepage": "https://github.com/ccnmtl/mediathread-collect#readme"
+}
