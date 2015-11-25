@@ -935,7 +935,7 @@ window.MediathreadCollect = {
 
                 asset.sources[asset.primary_type] = uri.href();
             }
-            if (!asset) {
+            if (!asset || assetUrl === 'http://undefined') {
                 return;
             }
             var doc = comp.ul.ownerDocument;
