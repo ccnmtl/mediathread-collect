@@ -2,10 +2,7 @@
 
 [![Build Status](https://travis-ci.org/ccnmtl/mediathread-collect.svg?branch=master)](https://travis-ci.org/ccnmtl/mediathread-collect)
 
-Common code for the Chrome, Safari, and Firefox extensions for Mediathread
-
-HOW IT IS RUN:
-These are the main files for Mediathread Collect extension code.
+Common code for the Chrome, Safari, and Firefox extensions for Mediathread.
 
 ARCHITECTURE:
 Everything lives within two namespaces: window.MediathreadCollect and
@@ -17,7 +14,7 @@ way, if required, this file could also be used as a library.  In
 this scenario, if a site wanted an 'AnalyzeThis' button to work
 without a user needing to install a extension, then this file
 would be loaded, and the button would call into
-MediathreadCollect.runners['jump'] (or .decorate).
+`MediathreadCollect.runners['jump']` (or .decorate).
 
 A typical MediathreadCollectOptions set of values would be:
 
@@ -34,7 +31,7 @@ mediathread or to display the options list (which is more often
 the default).
 
 Basic parts:
-.hosthandler.* : This dictionary is a list of all special-cased
+`.hosthandler.*` : This dictionary is a list of all special-cased
 hosts.  When these keys match anywhere (so
 university proxies will work) in
 document.location, then this code will be
@@ -48,12 +45,12 @@ find: function(callback) = this is the function, which fill find assets and
 then run callback([array of assets -- see below for datastructure])
 -- async allows you to make ajax calls, or whatever else you need
 
-allow_save_all = if true, there will be an interface on the
+`allow_save_all` = if true, there will be an interface on the
 bottom to save all assets at once.  This is
 somewhat experimental -- used to load a
 whole course from VITAL into MediaThread
 
-also_find_general = if true, then the normal media type
+`also_find_general` = if true, then the normal media type
 queries will be run.  This is a good way
 to implement custom metadata searches,
 without rewriting support for media.
@@ -88,35 +85,37 @@ blank array if none are found.
 
 
 The asset objects passed back should have the following structure:
-{html:<dom object of media>,
-primary_type:<string of the sources key
-most important for this media.  e.g. 'video' >,
-sources: {
-title:<title string.  if omitted, it will
-be discerned from the primary_type's filename>,
 
-url: <only use if you want to
-override the url that is
-displayed to the user as a
-link to get back to the
-archive's page for the
-asset.  mostly this is just
-document.location>
+    {html:<dom object of media>,
+    primary_type:<string of the sources key
+    most important for this media.  e.g. 'video' >,
+    sources: {
+    title:<title string.  if omitted, it will
+    be discerned from the primary_type's filename>,
 
-<key:values of urls that will be
-stored in the asset's Source
-objects in MediaThread>
+    url: <only use if you want to
+    override the url that is
+    displayed to the user as a
+    link to get back to the
+    archive's page for the
+    asset.  mostly this is just
+    document.location>
 
-<key>-metadata: <metadata for the source
-key in the form of 'w<width>h<height>' >
-},
+    <key:values of urls that will be
+    stored in the asset's Source
+    objects in MediaThread>
 
-metadata: { <key, value pairs for metadata.
-Values should always be an array of strings>
-}
+    <key>-metadata: <metadata for the source
+    key in the form of 'w<width>h<height>' >
+    },
 
-}
-.assethandler.objects_and_embeds.*
+    metadata: { <key, value pairs for metadata.
+    Values should always be an array of strings>
+    }
+
+    }
+
+`.assethandler.objects_and_embeds.*`
 Since a large subset of assethandlers look for an
 object or embed tag, and dancing between duplicate
 versions often appear in sites, the general code is
@@ -125,11 +124,11 @@ and embed tags.  It's important to look at examples for good
 practices on how to go through these elements.  These have two main
 functions:
 
-.match(embed_or_object) = this function should ===null if the embed/object
+`.match(embed_or_object)` = this function should `===null` if the embed/object
 tag does not match, and can return anything else, if it does match.
-.asset(embed_or_object,matchRv,context,index,optionalCallback)
-@matchRv = whatever .match returned
-@optionalCallback = you can just return the asset_object directly
+`.asset(embed_or_object,matchRv,context,index,optionalCallback)`
+`@matchRv` = whatever .match returned
+`@optionalCallback` = you can just return the `asset_object` directly
 but if you need to do ajax, or callback-based apis to get all the
 info/metadata, then you can return an asset object with with a
 'wait': true key, and then call
@@ -148,7 +147,7 @@ action.  This is probably the best one going forward.
 HELP FUNCTIONS:
 connect: quick cross-browser event-listener
 hasClass(elem,cls),
-hasBody(doc) -- does it have a doc.body value?  <frameset> pages do NOT
+hasBody(doc) -- does it have a doc.body value?  `<frameset>` pages do NOT
 clean(str), getImageDimensions(), mergeMetadata(),
 xml2dom(str,xhr), absolute_url(),
 elt() for creating new html in a way that is frame/browser friendly
