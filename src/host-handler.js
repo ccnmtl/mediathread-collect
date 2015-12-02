@@ -834,13 +834,6 @@ var hostHandler = {
             var video = document.getElementById('movie_player');
             if (video && video !== null) {
                 var vMatch = video.getAttribute('flashvars');
-                if (vMatch &&
-                    vMatch.split('cbr=')[1].match('IE&') !== null
-                   ) {
-                    // this is an IE embed then
-                    window.IEVideo = video;
-                    $(video).css('display','none');
-                }
                 if (vMatch) {
                     vMatch = vMatch.match(/video_id=([^&]*)/);
                 } else { //mostly for <OBJECT>
