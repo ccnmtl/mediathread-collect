@@ -71,8 +71,10 @@ describe('classpop.ccnmtl.columbia.edu', function() {
             url: 'https://classpop.ccnmtl.columbia.edu/content/perspectives-freedom-speech',
             scripts: [jqueryUrl],
             done: function (err, window) {
-                var $ = window.$;
-                assert.ok($('#currently_playing').length === 1);
+                if (typeof window !== 'undefined') {
+                    var $ = window.$;
+                    assert.ok($('#currently_playing').length === 1);
+                }
                 done();
             }
         });
