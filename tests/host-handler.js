@@ -68,7 +68,7 @@ describe('blakearchive.org', function() {
 describe('classpop.ccnmtl.columbia.edu', function() {
     it('has the expected DOM', function(done) {
         jsdom.env({
-            url: 'http://classpop.ccnmtl.columbia.edu/content/perspectives-freedom-speech',
+            url: 'https://classpop.ccnmtl.columbia.edu/content/perspectives-freedom-speech',
             scripts: [jqueryUrl],
             done: function (err, window) {
                 var $ = window.$;
