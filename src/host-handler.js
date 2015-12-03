@@ -413,7 +413,7 @@ var hostHandler = {
                                 'image': imgUrl,
                                 // owner's photostream
                                 'metadata-photostream':
-                                'http://www.flickr.com/photos/' +
+                                'https://www.flickr.com/photos/' +
                                     getInfoData.photo.owner.nsid,
                                 'image-metadata': 'w' + w + 'h' + h,
                                 'metadata-owner':
@@ -567,7 +567,7 @@ var hostHandler = {
                 if (source.split('//').length < 3 &&
                     !patt.test(source)
                    ) {
-                    source = 'http://' + source.split('//')[1];
+                    source = 'https://' + source.split('//')[1];
                     source = source.split('=')[0];
                     obj.html = this;
                     obj.sources = {};
