@@ -1,64 +1,6 @@
 var assetHandler = {
     objects_and_embeds: {
         players: {
-            'realplayer': {
-                /*NOTE: realplayer plugin works in non-IE only WITH <embed>
-                  whereas in IE it only works with <object>
-                  efforts to GetPosition() need to take this into
-                  consideration
-                */
-                match: function(eo) {
-                    return (
-                        ('object' === eo.tagName.toLowerCase()) ?
-                            (eo.classid ===
-                             'clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA' &&
-                             'obj') || null :
-                            (String(eo.type) ===
-                             'audio/x-pn-realaudio-plugin' && 'emb') ||
-                            null);
-                },
-                asset: function(emb, match, context, index,
-                                optionalCallback) {
-                    var abs = MediathreadCollect.absolute_url;
-                    var rv = {
-                        html: emb,
-                        primary_type: 'realplayer',
-                        sources: {}
-                    };
-                    if (match === 'emb') {
-                        rv.sources.realplayer = abs(
-                            emb.src, context.document);
-                    } else if (match === 'obj') {
-                        var src = $('param[name=src],param[name=SRC]',emb);
-                        if (src.length) {
-                            rv.sources.realplayer = abs(src.get(0).value,
-                                                        context.document);
-                        } else {
-                            return rv;//FAIL
-                        }
-                    }
-
-                    if (typeof emb.DoPlay !== 'undefined') {
-                        rv.sources['realplayer-metadata'] = 'w' + (
-                            emb.GetClipWidth() || emb.offsetWidth
-                        ) + 'h' + (emb.GetClipHeight() || emb.offsetHeight);
-
-                        rv.sources.title = emb.GetTitle() || undefined;
-                        if (rv.sources.title) {//let's try for the rest
-                            rv.metadata = {
-                                'author': [emb.GetAuthor() || undefined],
-                                'copyright': [emb.GetCopyright() ||
-                                              undefined]
-                            };
-                        }
-                    } else {
-                        rv.sources['realplayer-metadata'] =
-                            'w' + emb.width + 'h' + emb.height;
-                    }
-
-                    return rv;
-                }
-            },/*end realplayer embeds*/
             'youtube': {
                 match: function(emb) {
                     ///ONLY <EMBED>
