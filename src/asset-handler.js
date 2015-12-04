@@ -63,7 +63,7 @@ var assetHandler = {
                 match: function(emb) {
                     ///ONLY <EMBED>
                     return String(emb.src).match(
-                            /^http:\/\/www.youtube.com\/v\/([\w\-]*)/);
+                            /^https:\/\/www.youtube.com\/v\/([\w\-]*)/);
                 },
                 asset: function(emb, match, context,
                                 index, optionalCallback) {
@@ -81,7 +81,7 @@ var assetHandler = {
                         primary_type: 'youtube',
                         label: 'youtube video',
                         sources: {
-                            'youtube': 'http://www.youtube.com/v/' +
+                            'youtube': 'https://www.youtube.com/v/' +
                                 VIDEO_ID + '?enablejsapi=1&fs=1',
                             'gapi': 'https://www.googleapis.com/' +
                                 'youtube/v3/videos?id=' + VIDEO_ID
@@ -876,7 +876,7 @@ var assetHandler = {
             };
             for (var i = 0; i < frms.length; i++) {
                 var vMatch = String(frms[i].src)
-                    .match(/^http:\/\/www.youtube.com\/embed\/([\w\-]*)/);
+                    .match(/^https:\/\/www.youtube.com\/embed\/([\w\-]*)/);
                 if (vMatch && vMatch.length > 1) {
                     MediathreadCollect.assethandler
                         .objects_and_embeds.players
