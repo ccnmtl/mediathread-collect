@@ -106,7 +106,7 @@ img.sherd-image {
     margin: 0 !important;
     top:0 !important;
     height: 55px !important;
-    background: url('/img/mediathread_logo.png') #383838 no-repeat !important;
+    background: url('../img/mediathread_logo.png') #383838 no-repeat !important;
     background-position: center left !important;
 }
 
