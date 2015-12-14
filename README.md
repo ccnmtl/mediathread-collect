@@ -149,7 +149,7 @@ connect: quick cross-browser event-listener
 hasClass(elem,cls),
 hasBody(doc) -- does it have a doc.body value?  `<frameset>` pages do NOT
 clean(str), getImageDimensions(), mergeMetadata(),
-xml2dom(str,xhr), absolute_url(),
+xml2dom(str,xhr), absoluteUrl(),
 elt() for creating new html in a way that is frame/browser friendly
 
 Finder() : This object is the main thing that walks through the document's
