@@ -631,7 +631,7 @@ var assetHandler = {
             }
         },
         find: function(callback, context) {
-            var self = this;
+            var me = this;
             var result = [];
             var waiting = 0;
             var finished = function(index, assetResult) {
@@ -641,10 +641,10 @@ var assetHandler = {
                 }
             };
             function matchNsniff(oe) {
-                for (var p in self.players) {
-                    var m = self.players[p].match(oe);
+                for (var p in me.players) {
+                    var m = me.players[p].match(oe);
                     if (m !== null) {
-                        var res = self.players[p].asset(
+                        var res = me.players[p].asset(
                             oe, m, context, result.length, finished);
                         if (res.sources) {
                             result.push(res);
@@ -989,7 +989,7 @@ var assetHandler = {
     unAPI: {
         page_resource: true,
         find: function(callback, context) {
-            var self = this;
+            var me = this;
             var unapi = $('abbr.unapi-id');
             // must find one, or it's not a page resource, and
             // we won't know what asset to connect to
@@ -1124,7 +1124,7 @@ var assetHandler = {
     'oEmbed.json': {
         page_resource: true,
         find: function(callback, context) {
-            var self = this;
+            var me = this;
             var oembedLink = false;
             $('link').each(function() {
                 //jQuery 1.0 compatible
