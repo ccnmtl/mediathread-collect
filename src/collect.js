@@ -1087,7 +1087,7 @@ window.MediathreadCollect = {
                 var new_frm = target.createElement('form');
                 new_frm.action = this.action;
                 new_frm.method = 'POST';
-                $(new_frm).html($(this).html());
+                $(new_frm).append($(this).clone());
                 target.body.appendChild(new_frm);
 
                 var noui = target.createElement('input');
