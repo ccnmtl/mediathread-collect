@@ -45,9 +45,11 @@ window.MediathreadCollect = {
             }
         }
     },/*gethosthandler*/
-    'obj2url': function(host_url,obj) {
+    'obj2url': function(host_url, obj) {
         /*excluding metadata because too short for GET string*/
-        if (!obj.sources.url) obj.sources.url = String(document.location);
+        if (!obj.sources.url) {
+            obj.sources.url = String(document.location);
+        }
         var destination =  host_url;
         for (var a in obj.sources) {
             if (typeof obj.sources[a] === 'undefined') {
@@ -62,8 +64,8 @@ window.MediathreadCollect = {
     },/*obj2url*/
     'obj2form': function(host_url, obj, doc, target, index) {
         var M = window.MediathreadCollect;
-        doc = doc||document;
-        target = target||'_top';
+        doc = doc || document;
+        target = target || '_top';
         // if more than one asset, we should try to prefix this to
         // keep url= unique
         if (!obj.sources.url) {
@@ -220,7 +222,7 @@ window.MediathreadCollect = {
             }
         }
     },/*runners*/
-    'connect': function (dom, event, func) {
+    'connect': function(dom, event, func) {
         try {
             return (
                 (dom.addEventListener) ?
@@ -228,7 +230,7 @@ window.MediathreadCollect = {
                     dom.attachEvent('on' + event, func));
         } catch (e) {/*dom is null in firefox?*/}
     },/*connect*/
-    'hasClass': function (elem,cls) {
+    'hasClass': function(elem, cls) {
         return (' ' + (elem.className || elem.getAttribute('class')) + ' ')
             .indexOf(cls) > -1;
     },
@@ -304,7 +306,7 @@ window.MediathreadCollect = {
                 $('[itemprop]', item).each(function() {
                     var p = this.getAttribute('itemprop');
                     props[p] = props[p] || [];
-                    switch(String(this.tagName).toLowerCase()) {
+                    switch (String(this.tagName).toLowerCase()) {
                     case 'a':
                     case 'link':
                     case 'area':
@@ -381,13 +383,13 @@ window.MediathreadCollect = {
                     metaData['metadata-' + itemProp] = val;
                 }
             });
-            for(var data in metaData) {
+            for (var data in metaData) {
                 if (typeof metaData[data] === 'object') {
                     var flatMetaData = '';
-                    for(var str in metaData[data]) {
+                    for (var str in metaData[data]) {
                         if (flatMetaData === '') {
                             flatMetaData = metaData[data][str];
-                        }else{
+                        } else {
                             flatMetaData += ', ' + metaData[data][str];
                         }
                     }
@@ -397,7 +399,7 @@ window.MediathreadCollect = {
             return metaData;
         }// end meta_data_elms !== undefined
     },
-    'xml2dom': function (str) {
+    'xml2dom': function(str) {
         if (window.DOMParser) {
             var p = new DOMParser();
             return p.parseFromString(str, 'text/xml');
@@ -411,7 +413,7 @@ window.MediathreadCollect = {
             return div;
         }
     },
-    'find_by_attr': function (jq,tag,attr,val,par) {
+    'find_by_attr': function(jq, tag, attr, val, par) {
         if (/^1.0/.test(jq.prototype.jquery)) {
             return jq(tag,par).filter(function(elt) {
                 return (elt.getAttribute && elt.getAttribute(attr) === val);
@@ -420,7 +422,7 @@ window.MediathreadCollect = {
             return jq(tag + '[' + attr + '=' + val + ']', par);
         }
     },
-    'absoluteUrl': function (maybe_local_url, doc, maybe_suffix) {
+    'absoluteUrl': function(maybe_local_url, doc, maybe_suffix) {
         maybe_local_url = (maybe_suffix || '') + maybe_local_url;
         if (/:\/\//.test(maybe_local_url)) {
             return maybe_local_url;
@@ -439,18 +441,18 @@ window.MediathreadCollect = {
             }
         }
     },
-    'elt': function(doc,tag,className,style,children) {
+    'elt': function(doc, tag, className, style, children) {
         // we use this to be even more careful than jquery for contexts
         // like doc.contentType='video/m4v' in firefox
-        var setStyle = function(e,style) {
+        var setStyle = function(e, style) {
             //BROKEN IN IE: http://www.peterbe.com/plog/setAttribute-style-IE
             var css = style.split(';');
             var bToUpperCase = function(a, b) {
                 return b.toUpperCase();
             };
-            for (var i = 0; i <css.length; i++) {
+            for (var i = 0; i < css.length; i++) {
                 var kv = css[i].split(':');
-                if (kv[0] && kv.length===2) {
+                if (kv[0] && kv.length === 2) {
                     e.style[
                         kv[0].replace(/-([a-z])/, bToUpperCase)
                     ] = kv[1];
@@ -462,17 +464,19 @@ window.MediathreadCollect = {
         if (typeof style === 'string') {
             t.setAttribute('style', style);
             setStyle(t, style);
-        } else for (var a in style) {
-            t.setAttribute(a, style[a]);
-            if (style[a] === null) {
-                t.removeAttribute(a);
-            }
-            if (a === 'style') {
-                setStyle(t, style[a]);
+        } else {
+            for (var a in style) {
+                t.setAttribute(a, style[a]);
+                if (style[a] === null) {
+                    t.removeAttribute(a);
+                }
+                if (a === 'style') {
+                    setStyle(t, style[a]);
+                }
             }
         }
         if (children) {
-            for (var i = 0; i <children.length; i++) {
+            for (var i = 0; i < children.length; i++) {
                 var c = children[i];
                 if (typeof c === 'string') {
                     t.appendChild(doc.createTextNode(c));
@@ -498,7 +502,7 @@ window.MediathreadCollect = {
 
         this.ASYNC = {
             remove: function(asset) {},
-            display: function(asset,index) {},
+            display: function(asset, index) {},
             finish: function() {},
             best_frame: function(frame) {}
         };
@@ -547,7 +551,7 @@ window.MediathreadCollect = {
                 $('.sherd-analyzer').remove();
             });
             //double check no asset on page
-            if ($('.sherd-asset li').length === 0 ) {
+            if ($('.sherd-asset li').length === 0) {
                 $('.sherd-analyzer').append(messageBox);
                 messageBox.prepend(closeBtn);
             }
@@ -601,7 +605,7 @@ window.MediathreadCollect = {
             ) {
                 // if there's only one asset on the page and rest are
                 // page_resources
-                merge_with = me.assets_found[me.assets_found.length-2];
+                merge_with = me.assets_found[me.assets_found.length - 2];
             } else if (asset.ref_id && asset.ref_id in me.asset_keys.ref_id) {
                 //a hack to let the page match two assets explicitly
                 merge_with = me.asset_keys.ref_id[asset.ref_id];
@@ -620,15 +624,17 @@ window.MediathreadCollect = {
                 //jQuery 1.0compat (for drupal)
                 $.extend(merge_with.sources, asset.sources);
                 ///not trying to merge individual arrays
-                if (merge_with.metadata && asset.metadata)
+                if (merge_with.metadata && asset.metadata) {
                     $.extend(merge_with.metadata, asset.metadata);
+                }
                 $.extend(asset, merge_with);
                 ///keep our pointers singular
                 list[ asset.sources[merge_with.primary_type] ] = asset;
             }
             list[asset.sources[primary_type]] = asset;
-            if (asset.ref_id)
+            if (asset.ref_id) {
                 me.asset_keys.ref_id[asset.ref_id] = asset;
+            }
             return asset;
         };
         this.mergeRedundant = function(asset) {
@@ -645,11 +651,13 @@ window.MediathreadCollect = {
             me.assets_found = me.assets_found.concat(assets);
             for (var i = 0; i < assets.length; i++) {
                 me.no_assets_yet = false;
-                if (assets[i].page_resource) ++me.page_resource_count;
+                if (assets[i].page_resource) {
+                    ++me.page_resource_count;
+                }
                 var after_merge = me.mergeRedundant(assets[i]);
                 if (after_merge) {
                     after_merge.html_id = me.assetHtmlID(after_merge);
-                    me.ASYNC.display(after_merge, /*index*/assets.length-1);
+                    me.ASYNC.display(after_merge, /*index*/assets.length - 1);
                     window.MediathreadCollect.assetBucket = assets;
                     if (window.console) {
                         window.console.log(assets);
@@ -670,7 +678,7 @@ window.MediathreadCollect = {
             }
         };
         this.walkFrames = function() {
-            var rv = {all:[]};
+            var rv = {all: []};
             rv.all.unshift({
                 'frame': window,
                 'document': document,
@@ -682,14 +690,15 @@ window.MediathreadCollect = {
                     document.body.offsetWidth * document.body.offsetHeight :
                     0);
             rv.best = ((max) ? rv.all[0] : null);
-            function _walk(index,domElement) {
+            function _walk(index, domElement) {
                 try {
                     var doc = this.contentDocument ||
                         this.contentWindow.document;
                     //if this fails, security issue
                     doc.getElementsByTagName('frame');
                     var context = {
-                        frame: this,document:doc,
+                        frame: this,
+                        document: doc,
                         window: this.contentWindow,
                         hasBody: MediathreadCollect.hasBody(doc)
                     };
@@ -709,17 +718,17 @@ window.MediathreadCollect = {
     },/*****************
      END Finder
       *****************/
-    'Interface': function (host_url, options) {
+    'Interface': function(host_url, options) {
         var M = MediathreadCollect;
         this.options = {
-            login_url:null,
+            login_url: null,
             tab_label: 'Analyze in Mediathread',
             not_logged_in_message: 'You are not logged in to Mediathread.',
             login_to_course_message: 'login to your Mediathread course',
             link_text_for_existing_asset: 'Link in Mediathread',
-            target:((M.hasBody(document))? document.body : null),
+            target: ((M.hasBody(document)) ? document.body : null),
             postTarget: '_top',
-            top:100,
+            top: 100,
             side: 'left',
             fixed: true,
             message_no_assets: 'Sorry, no supported assets were found on ' +
@@ -748,7 +757,9 @@ window.MediathreadCollect = {
         var comp = this.components = {};
 
         this.onclick = function(evt) {
-            if (me.windowStatus) return;
+            if (me.windowStatus) {
+                return;
+            }
             me.findAssets();
         };
 
@@ -773,7 +784,7 @@ window.MediathreadCollect = {
                                   me.elt(null,'br','',{}),
                                   'Please ',
                                   me.elt(null,'a','',{
-                                      href:o.login_url,
+                                      href: o.login_url,
                                       target: '_blank',
                                       style: 'color:#8C3B2E;'
                                   },[o.login_to_course_message]),
@@ -817,11 +828,11 @@ window.MediathreadCollect = {
                 }
             }
         };
-        this.elt = function(doc,tag,className,style,children) {
+        this.elt = function(doc, tag, className, style, children) {
             // we use this to be even more careful than jquery for contexts
             // like doc.contentType='video/m4v' in firefox
             doc = doc || comp.top.ownerDocument;
-            return M.elt(doc,tag,className,style,children);
+            return M.elt(doc, tag, className, style, children);
         };
         this.setupContent = function(target) {
             var exists = $('div.sherd-analyzer', target);
@@ -832,7 +843,7 @@ window.MediathreadCollect = {
                 comp.top.setAttribute('class','sherd-analyzer');
                 target.appendChild(comp.top);
             }
-            var pageYOffset = me.visibleY(target)+o.top;
+            var pageYOffset = me.visibleY(target) + o.top;
             var pageLength = $(document).height();
             $(comp.top).css('height', pageLength);
             // if page is long make sure the user is placed at top
@@ -920,7 +931,7 @@ window.MediathreadCollect = {
             newUrl = 'http://' + url.split('://')[1];
             return newUrl;
         };
-        this.displayAsset = function(asset,index) {
+        this.displayAsset = function(asset, index) {
             var assetUrl = asset.sources[asset.primary_type];
             if (typeof assetUrl !== 'undefined') {
                 var uri = URI(assetUrl);
@@ -988,8 +999,6 @@ window.MediathreadCollect = {
                     var $buttonAsset = $(this);
                     collectPopupClickHandler(form, me, $buttonAsset, host_url);
                 });
-
-
             }
             if (comp.ul) {
                 if (comp.ul.firstChild !== null &&
@@ -1002,7 +1011,7 @@ window.MediathreadCollect = {
         this.finishedCollecting = function(results) {
             //alert(results)
             if (comp.message) {
-                comp.message ='';/*erase searching message*/
+                comp.message = ''; // erase searching message
                 if (!results.found) {
                     $(comp.h2).text(o.message_no_assets_short);
                     $(comp.ul).html(me.elt(
@@ -1044,33 +1053,34 @@ window.MediathreadCollect = {
             $saveAllButton.text('Saving...');
 
             var all_forms = $('form', comp.ul);
-            var done = 0,
-                frmids = 0,
-                todo = all_forms.length,
-                form_dict = {},
-                updateForm = function(frm, new_href) {
-                    if (frm) {
-                        frm.disabled = true;
-                        $(frm.submitButton).remove();
-                        if (new_href) {
-                            $(frm).append(me.elt(null,'span','',{}, [
-                                me.elt(
-                                    null,'a','',
-                                    {href:new_href},
-                                    [o.link_text_for_existing_asset])
-                            ]));
-                        } else {
-                            $(frm).append(me.elt(
-                                null,'span','',{},[' Saved! ']));
-                        }
+            var done = 0;
+            var frmids = 0;
+            var todo = all_forms.length;
+            var form_dict = {};
+            var updateForm = function(frm, new_href) {
+                if (frm) {
+                    frm.disabled = true;
+                    $(frm.submitButton).remove();
+                    if (new_href) {
+                        $(frm).append(me.elt(null,'span','',{}, [
+                            me.elt(
+                                null, 'a', '',
+                                {href: new_href},
+                                [o.link_text_for_existing_asset])
+                        ]));
+                    } else {
+                        $(frm).append(me.elt(
+                            null,'span','',{},[' Saved! ']));
                     }
-                };
+                }
+            };
             if (window.postMessage) {
                 $(window).bind('message', function(jevt) {
                     //eh, let's not use this after all
                     var evt = jevt.originalEvent;
-                    if (host_url.indexOf(evt.origin) === -1 )
+                    if (host_url.indexOf(evt.origin) === -1) {
                         return;
+                    }
                     var parsed = evt.data.split('|');
                     updateForm(form_dict[ parsed[1] ], parsed[0]);
                 });
@@ -1082,8 +1092,6 @@ window.MediathreadCollect = {
                 comp.window.appendChild(iframe);
                 var target = iframe.contentDocument ||
                     iframe.contentWindow.document;
-
-
                 var new_frm = target.createElement('form');
                 new_frm.action = this.action;
                 new_frm.method = 'POST';
