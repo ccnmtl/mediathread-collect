@@ -1,5 +1,5 @@
 window.MediathreadCollect = {
-    /* updated by /accounts/logged_in.js */
+    /* updated by /accounts/is_logged_in/ */
     'user_status': {
         ready: false
     },
@@ -8,10 +8,10 @@ window.MediathreadCollect = {
         return true;
     },
     update_user_status: function(userStatus) {
-        var uninit = !window.MediathreadCollect.user_status.ready;
         for (var a in userStatus) {
             window.MediathreadCollect.user_status[a] = userStatus[a];
         }
+
         if (window.console) {
             window.console.log(userStatus);
         }
@@ -24,12 +24,6 @@ window.MediathreadCollect = {
         if ('flickr_apikey' in userStatus) {
             window.MediathreadCollect.options.flickr_apikey =
                 userStatus.flickr_apikey;
-        }
-
-        //Safari sometimes loads logged_in.js last, even when added first
-        if (uninit && userStatus.ready && MediathreadCollect.g) {
-            //find assets again
-            MediathreadCollect.g.findAssets();
         }
     },
     'hosthandler': hostHandler,
@@ -50,7 +44,12 @@ window.MediathreadCollect = {
         if (!obj.sources.url) {
             obj.sources.url = String(document.location);
         }
-        var destination =  host_url;
+
+        if (!/\/save\/$/.test(host_url)) {
+            host_url += '/save/';
+        }
+
+        var destination = host_url;
         for (var a in obj.sources) {
             if (typeof obj.sources[a] === 'undefined') {
                 continue;
@@ -73,7 +72,10 @@ window.MediathreadCollect = {
                 (index ? '#' + obj.sources[obj.primary_type]
                  .split('#')[0].split('/').pop() : '');
         }
-        var destination =  host_url;
+        if (!/\/save\/$/.test(host_url)) {
+            host_url += '/save/';
+        }
+        var destination = host_url;
         if (obj.hash) {
             destination += '#' + obj.hash;
         }
@@ -164,6 +166,9 @@ window.MediathreadCollect = {
     },
     'runners': {
         jump: function(host_url, jump_now) {
+            if (!/\/save\/$/.test(host_url)) {
+                host_url += '/save/';
+            }
             var final_url = host_url;
             var M = MediathreadCollect;
             var handler = M.gethosthandler();
@@ -204,6 +209,9 @@ window.MediathreadCollect = {
             handler.find.call(handler, jump_with_first_asset);
         },
         decorate: function(host_url) {
+            if (!/\/save\/$/.test(host_url)) {
+                host_url += '/save/';
+            }
             var M = MediathreadCollect;
             function go(run_func) {
                 M.g = new M.Interface(host_url);
@@ -719,6 +727,9 @@ window.MediathreadCollect = {
      END Finder
       *****************/
     'Interface': function(host_url, options) {
+        if (!/\/save\/$/.test(host_url)) {
+            host_url += '/save/';
+        }
         var M = MediathreadCollect;
         this.options = {
             login_url: null,
@@ -745,7 +756,7 @@ window.MediathreadCollect = {
                 this.options[a] = options[a];
             }
         }
-        //bring in options from MediathreadCollectOptions
+        //bring in options from MediathreadCollect.options
         for (var b in this.options) {
             if (M.options[b]) {
                 this.options[b] = M.options[b];
@@ -886,7 +897,7 @@ window.MediathreadCollect = {
 
             M.connect(comp.tab, 'click', this.onclick);
             M.connect(comp.collection, 'click', function(evt) {
-                var hostURL = MediathreadCollectOptions.host_url;
+                var hostURL = MediathreadCollect.options.host_url;
                 var url = me.unHttpsTheLink(hostURL.split(/\/save\//)[0]);
                 window.location.replace(url + '/asset/');
             });
@@ -964,7 +975,8 @@ window.MediathreadCollect = {
                 $(form.firstChild).empty().append(newAsset);
             } else {
                 asset.sources.thumb =
-                    host_url.split('save')[0] + 'media/img/nothumb_video.png';
+                    host_url.replace(/save\/$/, '') +
+                    'media/img/nothumb_video.png';
                 newAsset =
                     me.elt(null, 'img', 'sherd-video', {
                         src: asset.sources.thumb,
@@ -1137,16 +1149,12 @@ window.MediathreadCollect = {
     }
 };/*MediathreadCollect (root)*/
 
-if (!window.MediathreadCollectOptions) {
-    window.MediathreadCollectOptions = {};
-}
-
 ///1. search for assets--as soon as we find one, break out and send show: true
 ///2. on request, return a full asset list
 ///3. allow the grabber to be created by sending an asset list to it
-MediathreadCollect.options = MediathreadCollectOptions;
+MediathreadCollect.options = {};
 
-if (MediathreadCollectOptions.user_status) {
+if (MediathreadCollect.options.user_status) {
     MediathreadCollect.update_user_status(
-        MediathreadCollectOptions.user_status);
+        MediathreadCollect.options.user_status);
 }
