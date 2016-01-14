@@ -716,8 +716,8 @@ window.MediathreadCollect = {
             M.connect(comp.tab, 'click', this.onclick);
             M.connect(comp.collection, 'click', function(evt) {
                 var hostURL = MediathreadCollect.options.host_url;
-                var url = me.unHttpsTheLink(hostURL.split(/\/save\//)[0]);
-                window.location.replace(url + '/asset/');
+                hostURL.replace(/\/save\/$/, '');
+                window.location.replace(hostURL + '/asset/');
             });
             M.connect(comp.close, 'click', function(evt) {
                 $('.sherd-analyzer').remove();
@@ -755,10 +755,6 @@ window.MediathreadCollect = {
         };
         this.removeAsset = function(asset) {
             $('#' + asset.html_id).remove();
-        };
-        this.unHttpsTheLink = function(url) {
-            newUrl = 'http://' + url.split('://')[1];
-            return newUrl;
         };
         this.displayAsset = function(asset, index) {
             var assetUrl = asset.sources[asset.primary_type];
@@ -820,8 +816,7 @@ window.MediathreadCollect = {
                 $(form).append(form.submitButton2);
                 $(form).append(form.submitButton);
                 $(form.submitButton).click(function() {
-                    var action = me.unHttpsTheLink(
-                        $(this).parent().attr('action'));
+                    var action = $(this).parent().attr('action');
                     $(this).parent().attr('action', action);
                     $(this).parent().submit();
                 });
