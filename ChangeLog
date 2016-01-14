@@ -1,3 +1,8 @@
+2015-01-14  Nik Nyby  <nnyby@columbia.edu>
+
+	* Removed console.log statements.
+	* Removed settings.js.
+
 2015-12-08  Nik Nyby  <nnyby@columbia.edu>
 
 	* Fix image collection on learn.columbia.edu.
