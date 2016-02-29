@@ -26,13 +26,16 @@ window.MediathreadCollect = {
     'assethandler': assetHandler,
     'gethosthandler': function() {
         var hosthandler = MediathreadCollect.hosthandler;
+        var unproxiedHostname = location.hostname.replace(
+            '.ezproxy.cul.columbia.edu', '');
+
         for (var host in hosthandler) {
-            if (new RegExp(host + '$').test(
-                location.hostname.replace('.ezproxy.cul.columbia.edu', '')
-            )) {
+            if (new RegExp(host + '$').test(unproxiedHostname)) {
                 return hosthandler[host];
             }
         }
+
+        return null;
     },/*gethosthandler*/
     'obj2url': function(host_url, obj) {
         /*excluding metadata because too short for GET string*/
