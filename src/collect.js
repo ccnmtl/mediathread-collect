@@ -159,6 +159,33 @@ window.MediathreadCollect = {
                 doc);
         }/*imagemat_form*/
     },
+    'showNoAssetMessage': function() {
+        var $closeBtn = $('<div class="no-asset-close-btn">&#10005;</div>');
+        var $messageBox = $(
+            '<div class="no-asset-alert">' +
+                'Sorry, no supported assets were found on this page. ' +
+                'Try going to an asset page if you are on a ' +
+                'list/search page. <br/><br/> If there is a video on ' +
+                'the page, press play and then try again.' +
+                '</div>');
+        var winWidth = $(window).width();
+        var winHeight = $(window).height();
+        $('.import-header').remove();
+
+        $messageBox.css({
+            left: (winWidth / 2) - 262 + 'px',
+            top: (winHeight / 2) - 100 + 'px'
+        });
+
+        $closeBtn.click(function() {
+            $('.sherd-analyzer').remove();
+        });
+        //double check no asset on page
+        if ($('.sherd-asset li').length === 0) {
+            $('.sherd-analyzer').append($messageBox);
+            $messageBox.prepend($closeBtn);
+        }
+    },
     'runners': {
         jump: function(host_url, jump_now) {
             if (!/\/save\/$/.test(host_url)) {
@@ -343,35 +370,7 @@ window.MediathreadCollect = {
             if (me.assets_found.length === 0 &&
                 MediathreadCollect.user_ready()
                ) {
-                me.noAssetMessage();
-            }
-        };
-
-        this.noAssetMessage = function() {
-            var closeBtn = $('<div class="no-asset-close-btn">&#10005;</div>');
-            var messageBox = $(
-                '<div class="no-asset-alert">' +
-                    'Sorry, no supported assets were found on this page. ' +
-                    'Try going to an asset page if you are on a ' +
-                    'list/search page. <br/><br/> If there is a video on ' +
-                    'the page, press play and then try again.' +
-                    '</div>');
-            var winWidth = $(window).width();
-            var winHeight = $(window).height();
-            $('.import-header').remove();
-
-            messageBox.css({
-                left: (winWidth / 2) - 262 + 'px',
-                top: (winHeight / 2) - 100 + 'px'
-            });
-
-            closeBtn.click(function() {
-                $('.sherd-analyzer').remove();
-            });
-            //double check no asset on page
-            if ($('.sherd-asset li').length === 0) {
-                $('.sherd-analyzer').append(messageBox);
-                messageBox.prepend(closeBtn);
+                MediathreadCollect.showNoAssetMessage();
             }
         };
 
