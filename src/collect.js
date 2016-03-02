@@ -529,11 +529,8 @@ window.MediathreadCollect = {
             $('frame,iframe').each(_walk);
             return rv;
         };
-    }/*****************
-      END Finder
-     *****************/
-};/*MediathreadCollect (root)*/
-
+    }
+};
 
 var Interface = function(host_url, options) {
     if (!/\/save\/$/.test(host_url)) {
@@ -589,7 +586,8 @@ Interface.prototype.visibleY = function(target) {
 Interface.prototype.showWindow = function() {
     this.windowStatus = true;
     if (this.components.window) {
-        this.components.window.style.top = this.visibleY(this.components.window) + 'px';
+        this.components.window.style.top =
+            this.visibleY(this.components.window) + 'px';
         this.components.window.style.display = 'block';
         this.components.tab.style.display = 'none';
         $(this.components.ul).empty();
@@ -702,16 +700,19 @@ Interface.prototype.setupContent = function(target) {
     this.components.window = this.components.top.lastChild;
     this.components.ul = this.components.top.getElementsByTagName('ul')[0];
     this.components.h2 = this.components.top.getElementsByTagName('h2')[0];
-    this.components.close = this.components.top.getElementsByTagName('button')[0];
-    this.components.collection = this.components.top.getElementsByTagName('button')[1];
+    this.components.close =
+        this.components.top.getElementsByTagName('button')[0];
+    this.components.collection =
+        this.components.top.getElementsByTagName('button')[1];
     this.components.message = this.components.top.getElementsByTagName('p')[0];
 
     MediathreadCollect.connect(this.components.tab, 'click', this.onclick);
-    MediathreadCollect.connect(this.components.collection, 'click', function(evt) {
-        var hostURL = MediathreadCollect.options.host_url;
-        hostURL.replace(/\/save\/$/, '');
-        window.location.replace(hostURL + '/asset/');
-    });
+    MediathreadCollect.connect(
+        this.components.collection, 'click',function(evt) {
+            var hostURL = MediathreadCollect.options.host_url;
+            hostURL.replace(/\/save\/$/, '');
+            window.location.replace(hostURL + '/asset/');
+        });
     MediathreadCollect.connect(this.components.close, 'click', function(evt) {
         $('.sherd-analyzer').remove();
         this.components.window.style.display = 'none';
@@ -830,7 +831,9 @@ Interface.prototype.displayAsset = function(asset, index) {
     }
     if (this.components.ul) {
         if (this.components.ul.firstChild !== null &&
-            this.components.ul.firstChild.innerHTML === this.options.message_no_assets) {
+            this.components.ul.firstChild.innerHTML ===
+            this.options.message_no_assets
+           ) {
             $(this.components.ul.firstChild).remove();
         }
         this.components.ul.appendChild(li);
@@ -954,12 +957,10 @@ Interface.prototype.saveAll = function() {
 
         });
         new_frm.submit();
-
     });
     // TODO: this will be a huge pain, since it needs to be
     // cross-domain.
 };
-
 
 ///1. search for assets--as soon as we find one, break out and send show: true
 ///2. on request, return a full asset list
