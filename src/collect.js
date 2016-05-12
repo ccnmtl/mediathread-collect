@@ -669,6 +669,11 @@ Interface.prototype.setupContent = function(target) {
     // if page is long make sure the user is placed at top
     $(document).scrollTop(0);
     var doc = target.ownerDocument;
+
+    var hostUrl = MediathreadCollect.options.host_url;
+    hostUrl.replace(/\/save\/$/, '');
+    collectionUrl = hostUrl + '/asset/';
+
     this.components.top.appendChild(
         this.elt(doc,'div','sherd-tab','',[this.options.tab_label]));
     this.components.top.appendChild(
@@ -676,12 +681,12 @@ Interface.prototype.setupContent = function(target) {
             this.elt(doc,'div','sherd-window-inner','',[
                 this.elt(
                     doc,'button','sherd-close btn-primary','',['X']),
-                this.elt(
-                    doc,
-                    'button',
-                    'sherd-collection btn-primary',
-                    '',
-                    ['Go to Collection']),
+                $('<a />', {
+                    'class': 'sherd-collection btn-primary',
+                    'href': collectionUrl,
+                    'target': '_blank',
+                    'text': 'Go to Collection'
+                })[0],
                 this.elt(
                     doc,'h2','','',
                     ['Select "Analyze Now" to edit one item ' +
@@ -702,17 +707,9 @@ Interface.prototype.setupContent = function(target) {
     this.components.h2 = this.components.top.getElementsByTagName('h2')[0];
     this.components.close =
         this.components.top.getElementsByTagName('button')[0];
-    this.components.collection =
-        this.components.top.getElementsByTagName('button')[1];
     this.components.message = this.components.top.getElementsByTagName('p')[0];
 
     MediathreadCollect.connect(this.components.tab, 'click', this.onclick);
-    MediathreadCollect.connect(
-        this.components.collection, 'click',function(evt) {
-            var hostURL = MediathreadCollect.options.host_url;
-            hostURL.replace(/\/save\/$/, '');
-            window.location.replace(hostURL + '/asset/');
-        });
     MediathreadCollect.connect(this.components.close, 'click', function(evt) {
         $('.sherd-analyzer').remove();
         this.components.window.style.display = 'none';
