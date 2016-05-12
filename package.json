@@ -9,7 +9,7 @@
   "devDependencies": {
     "jscs": "^2.10.1",
     "jsdom": "^8.0.4",
-    "jshint": "^2.8.0",
+    "jshint": "^2.9.2",
     "mocha": "^2.3.4"
   },
   "scripts": {
