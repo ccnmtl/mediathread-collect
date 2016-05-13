@@ -86,7 +86,7 @@ window.MediathreadCollect = {
         form.method = (ready) ? 'POST' : 'GET';
 
         var form_api = M.options.form_api || 'mediathread';
-        M.forms[form_api](obj,form,ready,doc);
+        M.forms[form_api](obj, form, ready, doc);
         return form;
     },/*obj2form*/
     'addField': function(name, value, form, doc) {
@@ -114,7 +114,7 @@ window.MediathreadCollect = {
                 if (typeof obj.sources[a] === 'undefined') {
                     continue;
                 }
-                M.addField(a, obj.sources[a],form,doc);
+                M.addField(a, obj.sources[a], form, doc);
             }
             if (!obj.sources.title) {
                 var title = 'Untitled';
@@ -145,8 +145,8 @@ window.MediathreadCollect = {
                 $(form).append(span);
                 M.addField('ftitle', obj.sources.title, form, doc);
             }
-            M.addField('htmls[0]',obj.sources.url,form,doc);
-            M.addField('urls[0]',obj.sources[obj.primary_type],form,doc);
+            M.addField('htmls[0]', obj.sources.url, form, doc);
+            M.addField('urls[0]', obj.sources[obj.primary_type], form, doc);
             M.addField(
                 'jsons[0]',
                 JSON.stringify(
@@ -249,7 +249,7 @@ window.MediathreadCollect = {
                 /*future, auto-embed use-case.
                   When we do this, we need to support ffox 3.5-
                 */
-                M.l = M.connect(window,'load',go);
+                M.l = M.connect(window, 'load', go);
             } else {/*using as bookmarklet*/
                 go('onclick');
             }
@@ -277,7 +277,7 @@ window.MediathreadCollect = {
         } else {
             var cur_loc = doc.location.toString().split('?')[0].split('/');
             if (maybe_local_url.indexOf('/') === 0) {
-                return cur_loc.splice(0,3).join('/') + maybe_local_url;
+                return cur_loc.splice(0, 3).join('/') + maybe_local_url;
             } else {
                 cur_loc.pop();///filename
 
@@ -308,7 +308,7 @@ window.MediathreadCollect = {
             }
         };
         var t = doc.createElement(tag);
-        t.setAttribute('class',className);
+        t.setAttribute('class', className);
         if (typeof style === 'string') {
             t.setAttribute('style', style);
             setStyle(t, style);
@@ -597,15 +597,15 @@ Interface.prototype.showWindow = function() {
             this.options.login_url = this.options.login_url ||
                 host_url.split('/', 3).join('/');
             $(this.components.message).empty().append(
-                this.elt(null,'span','',{},
+                this.elt(null, 'span', '', {},
                        [this.options.not_logged_in_message,
-                        this.elt(null,'br','',{}),
+                        this.elt(null, 'br', '', {}),
                         'Please ',
-                        this.elt(null,'a','',{
+                        this.elt(null, 'a', '', {
                             href: this.options.login_url,
                             target: '_blank',
                             style: 'color:#8C3B2E;'
-                        },[this.options.login_to_course_message]),
+                        }, [this.options.login_to_course_message]),
                         ', and then click the ' + this.options.widget_name +
                         ' again to import items.'
                        ]));
@@ -660,7 +660,7 @@ Interface.prototype.setupContent = function(target) {
         this.components.top = exists.empty().get(0);
     } else {
         this.components.top = target.ownerDocument.createElement('div');
-        this.components.top.setAttribute('class','sherd-analyzer');
+        this.components.top.setAttribute('class', 'sherd-analyzer');
         target.appendChild(this.components.top);
     }
     var pageYOffset = this.visibleY(target) + this.options.top;
@@ -675,12 +675,12 @@ Interface.prototype.setupContent = function(target) {
     collectionUrl = hostUrl + '/asset/';
 
     this.components.top.appendChild(
-        this.elt(doc,'div','sherd-tab','',[this.options.tab_label]));
+        this.elt(doc, 'div', 'sherd-tab', '', [this.options.tab_label]));
     this.components.top.appendChild(
-        this.elt(doc,'div','sherd-window','', [
-            this.elt(doc,'div','sherd-window-inner','',[
+        this.elt(doc, 'div', 'sherd-window', '', [
+            this.elt(doc, 'div', 'sherd-window-inner', '', [
                 this.elt(
-                    doc,'button','sherd-close btn-primary','',['X']),
+                    doc, 'button', 'sherd-close btn-primary', '', ['X']),
                 $('<a />', {
                     'class': 'sherd-collection btn-primary',
                     'href': collectionUrl,
@@ -688,15 +688,15 @@ Interface.prototype.setupContent = function(target) {
                     'text': 'Go to Collection'
                 })[0],
                 this.elt(
-                    doc,'h2','','',
+                    doc, 'h2', '', '',
                     ['Select "Analyze Now" to edit one item ' +
                      'immediately, or "Send to Collection" to ' +
                      'send an item and keep collecting on this page.'
                     ]),
                 this.elt(
-                    doc,'p','sherd-message','',
+                    doc, 'p', 'sherd-message', '',
                     ['Searching for items....']),
-                this.elt(doc,'ul','sherd-asset','')
+                this.elt(doc, 'ul', 'sherd-asset', '')
             ])
         ])
     );
@@ -893,7 +893,7 @@ Interface.prototype.saveAll = function() {
             frm.disabled = true;
             $(frm.submitButton).remove();
             if (new_href) {
-                $(frm).append(this.elt(null,'span','',{}, [
+                $(frm).append(this.elt(null, 'span', '', {}, [
                     this.elt(
                         null, 'a', '',
                         {href: new_href},
@@ -901,7 +901,7 @@ Interface.prototype.saveAll = function() {
                 ]));
             } else {
                 $(frm).append(this.elt(
-                    null,'span','',{},[' Saved! ']));
+                    null, 'span', '', {}, [' Saved! ']));
             }
         }
     };

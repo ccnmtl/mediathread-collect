@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "devDependencies": {
-    "jscs": "^2.10.1",
+    "jscs": "^3.0.3",
     "jsdom": "^8.0.4",
     "jshint": "^2.9.2",
     "mocha": "^2.3.4"
