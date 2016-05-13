@@ -670,9 +670,9 @@ Interface.prototype.setupContent = function(target) {
     $(document).scrollTop(0);
     var doc = target.ownerDocument;
 
-    var hostUrl = MediathreadCollect.options.host_url;
-    hostUrl.replace(/\/save\/$/, '');
-    collectionUrl = hostUrl + '/asset/';
+    var hostUrl = this.host_url;
+    hostUrl = hostUrl.replace(/\/save\/$/, '');
+    var collectionUrl = hostUrl + '/asset/';
 
     this.components.top.appendChild(
         this.elt(doc, 'div', 'sherd-tab', '', [this.options.tab_label]));
