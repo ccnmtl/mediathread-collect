@@ -1,3 +1,7 @@
+2016-08-31  Nik Nyby  <nnyby@columbia.edu>
+
+	* Use https Artstor URLs.
+
 2016-01-21  Nik Nyby  <nnyby@columbia.edu>
 
 	* Fix Vimeo asset collection bug.
