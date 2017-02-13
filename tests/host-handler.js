@@ -39,29 +39,27 @@ describe('library.artstor.org', function() {
 });
 
 describe('blakearchive.org', function() {
-    it('has the expected DOM', function(done) {
+    it('has the expected title', function(done) {
         jsdom.env({
-            url: 'http://www.blakearchive.org/exist/blake/archive/' +
-                'object.xq?objectid=milton.a.illbk.33',
+            url: 'http://www.blakearchive.org/' +
+                'copy/songsie.n?descId=songsie.n.illbk.08',
             scripts: [jqueryUrl],
             done: function(err, window) {
                 var $ = window.$;
-                assert.ok($('img').length > 0);
-                assert.ok($('form[name="form"] option').length > 0);
+                assert.equal($('title').text(), 'The William Blake Archive');
                 done();
             }
         });
     });
 
-    it('has the expected DOM for the enlarged image page', function(done) {
+    it('has the expected title for the enlarged image page', function(done) {
         jsdom.env({
-            url: 'http://www.blakearchive.org/exist/blake/archive/' +
-                'enlargement.xq?objectdbi=milton.a.p33',
+            url: 'http://www.blakearchive.org/' +
+                'new-window/enlargement/songsie.n?descId=songsie.n.illbk.08',
             scripts: [jqueryUrl],
             done: function(err, window) {
                 var $ = window.$;
-                assert.ok($('img').length > 0);
-                assert.ok($('#enlargedImage').length === 1);
+                assert.equal($('title').text(), 'The William Blake Archive');
                 done();
             }
         });
@@ -71,8 +69,8 @@ describe('blakearchive.org', function() {
 describe('classpop.ccnmtl.columbia.edu', function() {
     it('has the expected DOM', function(done) {
         jsdom.env({
-            url: 'https://classpop.ccnmtl.columbia.edu/content/' +
-                'perspectives-freedom-speech',
+            url: 'https://classpop.ccnmtl.columbia.edu/' +
+                'content/perspectives-freedom-speech',
             scripts: [jqueryUrl],
             done: function(err, window) {
                 if (typeof window !== 'undefined') {
