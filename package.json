@@ -8,9 +8,9 @@
   },
   "devDependencies": {
     "jscs": "^3.0.3",
-    "jsdom": "^8.0.4",
+    "jsdom": "^9.11.0",
     "jshint": "^2.9.2",
-    "mocha": "^2.3.4"
+    "mocha": "^3.2.0"
   },
   "scripts": {
     "jshint": "jshint src/*.js tests/*.js",
