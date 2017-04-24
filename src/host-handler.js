@@ -1,3 +1,7 @@
+/* eslint-env jquery, node */
+/* global MediathreadCollect, dijit */
+/* exported getImageDimensions */
+
 var getImageDimensions = function(src, callback, onerror) {
     var img = document.createElement('img');
     img.onload = function() {
@@ -31,11 +35,11 @@ var hostHandler = {
                 url: 'http://' + location.hostname +
                     '/video/meta/' + token[1],
                 dataType: 'json',
-                dataFilter: function(data, type) {
+                dataFilter: function(data) {
                     ///removes 'json=' prefix and unescapes content
                     return unescape(String(data).substr(5));
                 },
-                success: function(json, textStatus) {
+                success: function(json) {
                     var rv = [];
                     function deplus(str, arr) {
                         if (str) {
@@ -181,7 +185,7 @@ var hostHandler = {
                         '/library/secure/imagefpx/' +
                         obj.artstorId + '/103/5',
                     dataType: 'json',
-                    success: function(fpxdata, textStatus) {
+                    success: function(fpxdata) {
                         var f = fpxdata[0];
                         obj.sources.fsiviewer =
                             'https://viewer2.artstor.org/' +
@@ -204,9 +208,7 @@ var hostHandler = {
                         '/library/secure/metadata/' +
                         obj.artstorId,
                     dataType: 'json',
-                    success: function(metadata, textStatus) {
-                        var imgLink = metadata.imageUrl.match(
-                                /size\d\/(.*)\.\w+$/);
+                    success: function(metadata) {
                         obj.sources.title = metadata.title;
                         obj.sources.thumb =
                             'https://library.artstor.org' +
@@ -257,8 +259,7 @@ var hostHandler = {
                 MediathreadCollect.assethandler.
                     objects_and_embeds.players.youtube.asset(
                         videoDomObject,
-                        vMatch,
-                        {
+                        vMatch, {
                             'window': window,
                             'document': document
                         },
@@ -270,7 +271,7 @@ var hostHandler = {
                 callback([]);
             }
         },
-        decorate: function(objs) {
+        decorate: function() {
         }
     },
 
@@ -368,7 +369,7 @@ var hostHandler = {
                         });
                 });/*end $.ajax*/
         },
-        decorate: function(objs) {
+        decorate: function() {
         }
     },
 
@@ -398,8 +399,7 @@ var hostHandler = {
                         objects_and_embeds.players.
                         flowplayer3.asset(
                             video,
-                            vMatch,
-                            {
+                            vMatch, {
                                 'window': window,
                                 'document': document
                             });
@@ -492,7 +492,7 @@ var hostHandler = {
 
             return callback([fpRv]);
         },
-        decorate: function(objs) {
+        decorate: function() {
         }
     },
 
@@ -565,14 +565,12 @@ var hostHandler = {
                 // parse vimeo id out of the fallback url
                 var $wrapper = $(videos[0]);
                 var $player = $wrapper.closest('.player');
-                var url = $player.data('fallback-url');
                 var vimeoId = $player.data('clip-id') || $player.attr('id');
 
                 MediathreadCollect.assethandler.objects_and_embeds
                     .players.moogaloop.asset(
                         $('.video-wrapper video').first(),
-                        vimeoId,
-                        {
+                        vimeoId, {
                             'window': window,
                             'document': document
                         },
@@ -582,7 +580,7 @@ var hostHandler = {
                         });
             }
         },
-        decorate: function(objs) {
+        decorate: function() {
         }
     },
 
@@ -605,8 +603,7 @@ var hostHandler = {
                 MediathreadCollect.assethandler.objects_and_embeds
                     .players.youtube.asset(
                         video,
-                        vMatch,
-                        {
+                        vMatch, {
                             'window': window,
                             'document': document
                         },
@@ -623,8 +620,7 @@ var hostHandler = {
                 MediathreadCollect.assethandler.objects_and_embeds
                     .players.youtube.asset(
                         video,
-                        fauxMatch,
-                        {
+                        fauxMatch, {
                             'window': window,
                             'document': document
                         },
@@ -636,11 +632,14 @@ var hostHandler = {
                 callback([]);
             }
         },
-        decorate: function(objs) {
+        decorate: function() {
         }
     }
 };
 
 if (typeof module !== 'undefined') {
-    module.exports = hostHandler;
+    module.exports = {
+        hostHandler: hostHandler,
+        getImageDimensions: getImageDimensions
+    };
 }

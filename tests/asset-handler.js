@@ -1,6 +1,8 @@
-var assert = require('assert');
+/* eslint-env es6, mocha, node */
 
-var assetHandler = require('../src/asset-handler.js');
+const assert = require('assert');
+
+const assetHandler = require('../src/asset-handler.js');
 
 describe('assethandler', function() {
     it('should exist', function() {
