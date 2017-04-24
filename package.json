@@ -7,14 +7,12 @@
     "test": "tests"
   },
   "devDependencies": {
-    "jscs": "^3.0.3",
+    "eslint": "^3.19.0",
     "jsdom": "^10.0.0",
-    "jshint": "^2.9.2",
     "mocha": "^3.2.0"
   },
   "scripts": {
-    "jshint": "jshint src/*.js tests/*.js",
-    "jscs": "jscs src/*.js tests/*.js",
+    "eslint": "eslint src/*.js tests/*.js",
     "test": "mocha tests/ -t 18000"
   },
   "repository": {

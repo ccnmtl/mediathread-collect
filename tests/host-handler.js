@@ -1,8 +1,11 @@
+/* eslint-env es6, mocha, node */
+
 const assert = require('assert');
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 
-const hostHandler = require('../src/host-handler.js');
+const HH = require('../src/host-handler.js');
+const { hostHandler } = HH;
 
 const jqueryUrl = 'https://ajax.googleapis.com/ajax/libs/jquery/' +
     '2.1.4/jquery.min.js';
@@ -16,7 +19,7 @@ describe('hosthandler', function() {
 
 describe('library.artstor.org', function() {
     it('has the expected JavaScript', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'http://library.artstor.org/library/',
             resourceLoader: function(resource, callback) {
                 // Only load relevant scripts, otherwise jsdom times out.
@@ -41,7 +44,7 @@ describe('library.artstor.org', function() {
 
 describe('blakearchive.org', function() {
     it('has the expected title', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'http://www.blakearchive.org/' +
                 'copy/songsie.n?descId=songsie.n.illbk.08',
             scripts: [jqueryUrl],
@@ -54,7 +57,7 @@ describe('blakearchive.org', function() {
     });
 
     it('has the expected title for the enlarged image page', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'http://www.blakearchive.org/' +
                 'new-window/enlargement/songsie.n?descId=songsie.n.illbk.08',
             scripts: [jqueryUrl],
@@ -69,7 +72,7 @@ describe('blakearchive.org', function() {
 
 describe('classpop.ccnmtl.columbia.edu', function() {
     it('has the expected DOM', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'https://classpop.ccnmtl.columbia.edu/' +
                 'content/perspectives-freedom-speech',
             scripts: [jqueryUrl],
@@ -86,7 +89,7 @@ describe('classpop.ccnmtl.columbia.edu', function() {
 
 describe('flickr.com', function() {
     it('has the expected DOM', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'https://www.flickr.com/photos/dropacat/15183956471/',
             scripts: [jqueryUrl],
             done: function(err, window) {
@@ -100,7 +103,7 @@ describe('flickr.com', function() {
 
 describe('youtube.com', function() {
     it('has the expected DOM', function(done) {
-        new JSDOM(``, {
+        new JSDOM('', {
             url: 'https://www.youtube.com/watch?v=ZQhbB6-cT3Y',
             scripts: [jqueryUrl],
             done: function(err, window) {

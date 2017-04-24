@@ -1,3 +1,6 @@
+/* eslint-env jquery, node */
+/* global MediathreadCollect */
+
 var assetHandler = (function() {
     var clean = function(str) {
         return str.replace(/^\s+/, '').replace(/\s+$/, '').replace(/\s+/, ' ');
@@ -7,7 +10,7 @@ var assetHandler = (function() {
         return jq(tag + '[' + attr + '=' + val + ']', par);
     };
 
-    var flowclipMetaSearch = function(doc) {
+    var flowclipMetaSearch = function() {
         var metaData = {};
         var metaDataElms = $('*[itemprop]', document);
         if (typeof metaDataElms !== 'undefined') {
@@ -20,7 +23,7 @@ var assetHandler = (function() {
                         'undefined') {
                         metaData['metadata-' + itemProp] = {};
                     }
-                    metaListItem = $('#' + metaId).text();
+                    var metaListItem = $('#' + metaId).text();
                     metaData['metadata-' + itemProp][metaId] = metaListItem;
                 }
                 if (itemProp === 'title') {
@@ -209,7 +212,7 @@ var assetHandler = (function() {
                             rv.hash = 'start=' + emb.getCurrentTime();
                         }
                     }
-                    var ytCallback = function(ytData, b, c) {
+                    var ytCallback = function(ytData) {
                         if (
                             $.type(ytData.items) === 'array' &&
                                 ytData.items.length > 0
@@ -265,7 +268,7 @@ var assetHandler = (function() {
                 },
                 asset: function(obj, match, context) {
                     var item;
-                    pl = obj.getPlaylist();
+                    var pl = obj.getPlaylist();
                     switch (pl.length) {
                         case 0:
                             return {};
@@ -401,7 +404,7 @@ var assetHandler = (function() {
                     }
                     var provider = (clip.provider &&
                                     cfg.plugins[clip.provider]) || false;
-                    function getProvider(c) {
+                    function getProvider() {
                         if (provider) {
                             var plugin = provider.url;
                             if (/pseudostreaming/.test(plugin)) {
@@ -524,8 +527,7 @@ var assetHandler = (function() {
                               (objemb.resource && String(objemb.resource)
                                .search('kaltura') > -1)))) || null;
                 },
-                asset: function(objemb, matchRv, context,
-                                index, optionalCallback) {
+                asset: function(objemb) {
                     var stream = objemb.data || objemb.src;
                     if (!stream) {
                         var movie = $(objemb).children(
@@ -713,7 +715,7 @@ var assetHandler = (function() {
                         },
                         wait: true
                     };
-                    var hardWay = function(error) {
+                    var hardWay = function() {
                         //security error?
                         //Let's try it the hard way!
                         var dim = {
@@ -766,7 +768,6 @@ var assetHandler = (function() {
                                             return optionalCallback(
                                                 index, rvZoomify);
                                         }
-                                        break;
                                     case 'tilegrp': --dim.tilegrp;
                                         var m = dim.mode;
                                         dim.mode = 'tilegrp';
@@ -896,7 +897,7 @@ var assetHandler = (function() {
     };
 
     handler.audio = {
-        find: function(callback, context) {
+        find: function(callback) {
             // test if we are on the asset itself, relying on
             // the browser (support) handling the mp3 file
             if (/.mp3$/.test(document.location)) {
@@ -944,7 +945,6 @@ var assetHandler = (function() {
                 return callback([]);
             }
             var frms = context.document.getElementsByTagName('iframe');
-            var result = [];
             MediathreadCollect.connect(
                 context.window,
                 'message',
@@ -988,7 +988,6 @@ var assetHandler = (function() {
     handler['iframe.youtube'] = {
         find: function(callback, context) {
             var frms = context.document.getElementsByTagName('iframe');
-            var result = [];
             var cb = function(ind, rv) {
                 callback([rv]);
             };
@@ -1000,8 +999,7 @@ var assetHandler = (function() {
                         .objects_and_embeds.players
                         .youtube.asset(
                             frms[i],
-                            vMatch,
-                            {
+                            vMatch, {
                                 'window': window,
                                 'document': document
                             },
@@ -1158,8 +1156,7 @@ var assetHandler = (function() {
     // http://unapi.info/specs/
     handler.unAPI = {
         page_resource: true,
-        find: function(callback, context) {
-            var me = this;
+        find: function(callback) {
             var unapi = $('abbr.unapi-id');
             // must find one, or it's not a page resource, and
             // we won't know what asset to connect to
@@ -1178,7 +1175,7 @@ var assetHandler = (function() {
                     $.ajax({
                         'url': requestUrl,
                         'dataType': 'text',
-                        success: function(pbcoreXml, textStatus, xhr) {
+                        success: function(pbcoreXml) {
                             var rv = {
                                 'page_resource': true,
                                 'html': unapi.get(0),
@@ -1259,12 +1256,13 @@ var assetHandler = (function() {
                                         'subject': []
                                     }
                                 };
-                                rv.metadata.Description = [$(
-                                    '.blacklight-dc_description_t ' +
-                                        '.value').text()];
-                                rv.metadata.Subject =
-                                    [$('.blacklight-topic_cv .value')
-                                     .text()];
+                                rv.metadata.Description = [
+                                    $('.blacklight-dc_description_t .value')
+                                        .text()
+                                ];
+                                rv.metadata.Subject = [
+                                    $('.blacklight-topic_cv .value').text()
+                                ];
                                 rv.metadata.Copyrights =
                                     [$('.copyright').text()];
                                 rv.metadata.Publisher =
@@ -1287,8 +1285,7 @@ var assetHandler = (function() {
     // http://www.oembed.com/
     handler['oEmbed.json'] = {
         page_resource: true,
-        find: function(callback, context) {
-            var me = this;
+        find: function(callback) {
             var oembedLink = false;
             $('link').each(function() {
                 //jQuery 1.0 compatible
@@ -1306,7 +1303,7 @@ var assetHandler = (function() {
                 $.ajax({
                     'url': result.html.href,
                     'dataType': 'json',
-                    success: function(json, textStatus) {
+                    success: function(json) {
                         if (json.ref_id) {
                             result.ref_id = json.ref_id;
                         }
@@ -1359,7 +1356,7 @@ var assetHandler = (function() {
                         }
                         callback([result]);
                     },
-                    error: function(e) {callback([]);}
+                    error: function() {callback([]);}
                 });
             } else {
                 callback([]);
