@@ -13,7 +13,7 @@
   },
   "scripts": {
     "eslint": "eslint src/*.js tests/*.js",
-    "test": "mocha tests/ -t 18000"
+    "test": "mocha tests/ -t 5000"
   },
   "repository": {
     "type": "git",
