@@ -19,10 +19,10 @@ describe('blakearchive.org', function() {
         JSDOM.fromURL(
             'http://www.blakearchive.org/' +
                 'copy/songsie.n?descId=songsie.n.illbk.08').then(dom => {
-                    assert.equal(dom.window.document.title,
-                                 'The William Blake Archive');
-                    done();
-                });
+            assert.equal(dom.window.document.title,
+                'The William Blake Archive');
+            done();
+        });
     });
 
     it('has the expected title for the enlarged image page', function(done) {

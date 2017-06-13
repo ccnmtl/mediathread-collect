@@ -50,7 +50,7 @@ window.MediathreadCollect = {
         if (!obj.sources.url) {
             obj.sources.url = String(doc.location) +
                 (index ? '#' + obj.sources[obj.primary_type]
-                 .split('#')[0].split('/').pop() : '');
+                    .split('#')[0].split('/').pop() : '');
         }
         if (!/\/save\/$/.test(host_url)) {
             host_url += '/save/';
@@ -110,7 +110,7 @@ window.MediathreadCollect = {
                 for (a in obj.metadata) {
                     for (var i = 0; i < obj.metadata[a].length; i++) {
                         M.addField('metadata-' + a, obj.metadata[a][i],
-                                   form, doc);
+                            form, doc);
                     }
                 }
             }
@@ -352,7 +352,7 @@ window.MediathreadCollect = {
             }
             if (me.assets_found.length === 0 &&
                 MediathreadCollect.user_ready()
-               ) {
+            ) {
                 MediathreadCollect.showNoAssetMessage();
             }
         };
@@ -376,9 +376,10 @@ window.MediathreadCollect = {
                 for (h in MediathreadCollect.assethandler) {
                     var handler = handlers[h];
                     try {
-                        handler.find.call(handler,
-                                          me.collectAssets,
-                                          context);
+                        handler.find.call(
+                            handler,
+                            me.collectAssets,
+                            context);
                     } catch (e) {
                         ++me.handler_count;
                         MediathreadCollect.error = e;
@@ -810,7 +811,7 @@ Interface.prototype.displayAsset = function(asset, index) {
         if (this.components.ul.firstChild !== null &&
             this.components.ul.firstChild.innerHTML ===
             this.options.message_no_assets
-           ) {
+        ) {
             $(this.components.ul.firstChild).remove();
         }
         this.components.ul.appendChild(li);
