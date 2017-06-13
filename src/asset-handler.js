@@ -182,10 +182,11 @@ var assetHandler = (function() {
                 match: function(emb) {
                     ///ONLY <EMBED>
                     return String(emb.src).match(
-                            /^https:\/\/www.youtube.com\/v\/([\w\-]*)/);
+                        /^https:\/\/www.youtube.com\/v\/([\w-]*)/);
                 },
-                asset: function(emb, match, context,
-                                index, optionalCallback) {
+                asset: function(
+                    emb, match, context, index, optionalCallback
+                ) {
                     var apikey = MediathreadCollect.options.youtube_apikey;
 
                     var VIDEO_ID;
@@ -208,7 +209,7 @@ var assetHandler = (function() {
                     if (emb.getCurrentTime) {
                         if (emb.getCurrentTime() > 0 &&
                             emb.getCurrentTime() < emb.getDuration()
-                           ) {
+                        ) {
                             rv.hash = 'start=' + emb.getCurrentTime();
                         }
                     }
@@ -337,14 +338,14 @@ var assetHandler = (function() {
                 match: function(obj) {
                     if (obj.data) {
                         return String(obj.data)
-                            .match(/flowplayer[\.\-\w]+3[.\d]+\.swf/);
+                            .match(/flowplayer[.\-\w]+3[.\d]+\.swf/);
                     } else {//IE7 ?+
                         var movie = findByAttr(
                             $, 'param', 'name', 'movie', obj);
                         return (
                             (movie.length) ?
                                 String(movie.get(0).value)
-                                .match(/flowplayer-3[\.\d]+\.swf/) :
+                                    .match(/flowplayer-3[.\d]+\.swf/) :
                                 null);
                     }
                 },
@@ -356,8 +357,8 @@ var assetHandler = (function() {
 
                     //config=
                     var cfg = (($f) ? $f.getConfig() :
-                               $.parseJSON($('param[name=flashvars]')
-                                           .get(0).value.substr(7)));
+                        $.parseJSON($('param[name=flashvars]')
+                            .get(0).value.substr(7)));
 
                     //getClip() works if someone's already clicked Play
                     var clip = ($f && $f.getClip()) || cfg.clip ||
@@ -372,13 +373,13 @@ var assetHandler = (function() {
                         ($f && $f.id() || undefined));
                 },
                 queryasset: function(context, obj, cfg,
-                                     clip, time, refId) {
+                    clip, time, refId) {
                     var sources = {};
                     var type = 'video';
                     var abs = MediathreadCollect.absoluteUrl;
                     if (cfg.playlist &&
                         (!clip.url || cfg.playlist.length > 1)
-                       ) {
+                    ) {
                         for (var i = 0; i < cfg.playlist.length; i++) {
                             var p = cfg.playlist[i];
                             var url =  abs(
@@ -449,14 +450,14 @@ var assetHandler = (function() {
                     if (!sources.thumb) {
                         var paramConfig =
                             $('*[name=flashvars]')[0].value
-                            .split('config=')[1];
+                                .split('config=')[1];
                         paramConfig = JSON.parse(paramConfig);
                         var paramObj = paramConfig;
                         var paramThumb;
                         if (paramObj &&
                             paramObj.canvas &&
                             paramObj.canvas.background
-                           ) {
+                        ) {
                             var bg = paramObj.canvas.background;
                             var bgsplit = bg.split('url(');
                             if (bgsplit.length > 1) {
@@ -518,14 +519,14 @@ var assetHandler = (function() {
                          'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' &&
                          movie.val().search('kaltura') > -1) ||
                             (String(objemb.type)
-                             .search('x-shockwave-flash') > -1 &&
+                                .search('x-shockwave-flash') > -1 &&
                              ((objemb.data &&
                                String(objemb.data).search('kaltura') > -1
-                              ) ||
+                             ) ||
                               (objemb.src &&
                                String(objemb.src).search('kaltura') > -1) ||
                               (objemb.resource && String(objemb.resource)
-                               .search('kaltura') > -1)))) || null;
+                                  .search('kaltura') > -1)))) || null;
                 },
                 asset: function(objemb) {
                     var stream = objemb.data || objemb.src;
@@ -610,14 +611,14 @@ var assetHandler = (function() {
                          'clsid:D27CDB6E-AE6D-11cf-96B8-444553540000' &&
                          movie.val().search('moogaloop') > -1) ||
                             (String(objemb.type)
-                             .search('x-shockwave-flash') > -1 &&
+                                .search('x-shockwave-flash') > -1 &&
                              ((objemb.data && String(objemb.data)
-                               .search('moogaloop.swf')) > -1 ||
+                                 .search('moogaloop.swf')) > -1 ||
                               (objemb.src && String(objemb.src)
-                               .search('moogaloop.swf') > -1)))) || null;
+                                  .search('moogaloop.swf') > -1)))) || null;
                 },
                 asset: function(objemb, matchRv, context,
-                                index, optionalCallback) {
+                    index, optionalCallback) {
                     var vimeoId;
                     if (matchRv) {
                         vimeoId = matchRv;
@@ -687,12 +688,12 @@ var assetHandler = (function() {
             'zoomify': {
                 match: function(objemb) {
                     return (String(objemb.innerHTML)
-                            .match(/zoomifyImagePath=([^&\"\']*)/) ||
+                        .match(/zoomifyImagePath=([^&"']*)/) ||
                             String(objemb.flashvars)
-                            .match(/zoomifyImagePath=([^&\"\']*)/));
+                                .match(/zoomifyImagePath=([^&"']*)/));
                 },
                 asset: function(objemb, match, context,
-                                index, optionalCallback) {
+                    index, optionalCallback) {
                     var tileRoot = MediathreadCollect.absoluteUrl(
                         match[1], context.document);
                     //chomp trailing /
@@ -785,7 +786,7 @@ var assetHandler = (function() {
                             url: tileRoot + '/ImageProperties.xml',
                             dataType: 'text',
                             success: function(dir) {
-                                var re = /WIDTH=\"(\d+)\"\s+HEIGHT=\"(\d+)\"/;
+                                var re = /WIDTH="(\d+)"\s+HEIGHT="(\d+)"/;
                                 var sizes = dir.match(re);
                                 rvZoomify.sources['xyztile-metadata'] =
                                     'w' + (sizes[1]) +
@@ -845,7 +846,7 @@ var assetHandler = (function() {
 
     handler.video = {
         addSource: function(source, rv, video) {
-            var codecs = /[.\/](ogv|ogg|webm|mp4)/i;
+            var codecs = /[./](ogv|ogg|webm|mp4)/i;
             if (!source.src) {
                 return;
             }
@@ -954,20 +955,20 @@ var assetHandler = (function() {
                         var d = $.parseJSON(evt.data);
                         if ((id = String(d.id).match(/^sherd(\d+)/)) &&
                             d.info
-                           ) {
+                        ) {
                             var i = d.info;
                             switch (i.player) {
                                 case 'flowplayer':
                                     var fp =
                                         (MediathreadCollect.assethandler
-                                         .objects_and_embeds.players
-                                         .flowplayer3.queryasset(
-                                             context,
-                                             frms[parseInt(id[1], 10)],
-                                             i.config,
-                                             i.clip,
-                                             i.time,
-                                             i.id));
+                                            .objects_and_embeds.players
+                                            .flowplayer3.queryasset(
+                                                context,
+                                                frms[parseInt(id[1], 10)],
+                                                i.config,
+                                                i.clip,
+                                                i.time,
+                                                i.id));
                                     return callback([fp]);
                                 default:
                                     return callback([]);
@@ -993,7 +994,7 @@ var assetHandler = (function() {
             };
             for (var i = 0; i < frms.length; i++) {
                 var vMatch = String(frms[i].src)
-                    .match(/^https:\/\/www.youtube.com\/embed\/([\w\-]*)/);
+                    .match(/^https:\/\/www.youtube.com\/embed\/([\w-]*)/);
                 if (vMatch && vMatch.length > 1) {
                     MediathreadCollect.assethandler
                         .objects_and_embeds.players
@@ -1029,12 +1030,12 @@ var assetHandler = (function() {
                     /logo/.test(image.parentNode.id) ||
                     //web.mit.edu/shakespeare/asia/
                     /logo\W/.test(image.src)
-                   ) {
+                ) {
                     continue;
                 }
                 if (image.src.length > 4096 ||
                     image.src.indexOf('data') === 0
-                   ) {
+                ) {
                     continue;
                 }
                 /*recreate the <img> so we get the real width/height */
@@ -1048,7 +1049,7 @@ var assetHandler = (function() {
                 }
                 if (imageInd.width >= 400 ||
                     imageInd.height >= 400
-                   ) {
+                ) {
                     result.push({
                         'html': image,
                         'primary_type': 'image',
@@ -1062,7 +1063,7 @@ var assetHandler = (function() {
                 } else {
                     ////Zoomify Tile Images support
                     var zoomifyMatch = String(image.src).match(
-                            /^(.*)\/TileGroup\d\//);
+                        /^(.*)\/TileGroup\d\//);
                     if (zoomifyMatch) {
                         var tileRoot = MediathreadCollect.absoluteUrl(
                             zoomifyMatch[1],
@@ -1100,7 +1101,7 @@ var assetHandler = (function() {
                                 /* jshint ignore:start */
                                 function(dir) {
                                     var sizes = dir.match(
-                                            /WIDTH=\"(\d+)\"\s+HEIGHT=\"(\d+)\"/
+                                        /WIDTH="(\d+)"\s+HEIGHT="(\d+)"/
                                     );
                                     zoomify.sources['xyztile-metadata'] =
                                         'w' + sizes[1] + 'h' + sizes[2];
@@ -1198,7 +1199,7 @@ var assetHandler = (function() {
                                 if (titleType === 'Element' ||
                                     document.title.indexOf(
                                         this.firstChild.data) > -1
-                                   ) {
+                                ) {
                                     rv.sources.title = this.firstChild.data;
                                 } else {
                                     rv.metadata[titleType + ':Title'] = [
@@ -1218,7 +1219,7 @@ var assetHandler = (function() {
                             });
                             $('coverage', pb).each(function() {
                                 var type = $('coverageType',
-                                             this.parentNode).text();
+                                    this.parentNode).text();
                                 rv.metadata['Coverage:' + type] =
                                     [this.firstChild.data];
                             });

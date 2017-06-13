@@ -15,7 +15,7 @@ var getImageDimensions = function(src, callback, onerror) {
 var getURLParameters = function(name) {
     return decodeURIComponent((new RegExp(
         '[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(
-            location.search) || [null, ''])[1].replace(/\+/g, '%20')) ||
+        location.search) || [null, ''])[1].replace(/\+/g, '%20')) ||
         null;
 };
 
@@ -27,7 +27,7 @@ var hostHandler = {
     'alexanderstreet.com': {
         find: function(callback) {
             var token = document.documentElement.innerHTML.match(
-                    /token=([^&\"\']+)/);
+                /token=([^&"']+)/);
             if (!token) {
                 return callback([]);
             }
@@ -51,7 +51,7 @@ var hostHandler = {
                     if (json) {
                         if (json.tracks && json.tracks.length > 0 &&
                             json.tracks[0].chunks.length > 0
-                           ) {
+                        ) {
                             var t = json.tracks[0];
                             // ASSUME: all chunks refer to same
                             // video file?
@@ -71,7 +71,7 @@ var hostHandler = {
                             for (var a in t.metadata) {
                                 if (t.metadata[a] &&
                                     !/id$/.test(a)
-                                   ) {
+                                ) {
                                     aspVid.metadata[a] = [
                                         deplus(t.metadata[a])];
                                 }
@@ -288,7 +288,7 @@ var hostHandler = {
 
             if (imageId.length < 1 ||
                 imageId.search(/\d{1,12}/) < 0
-               ) {
+            ) {
                 return callback([]);
             }
 
@@ -307,7 +307,7 @@ var hostHandler = {
                 function(getInfoData) {
                     if (typeof getInfoData.photo === 'undefined' ||
                         getInfoData.photo.media === 'video'
-                       ) {
+                    ) {
                         /*video is unsupported*/
                         return callback([]);
                     }
@@ -336,7 +336,7 @@ var hostHandler = {
                                 if (
                                     RegExp(
                                         'http://farm.*' + imageId)
-                                        .test(this.src)
+                                    .test(this.src)
                                 ) {
                                     img = this;
                                 }
@@ -459,7 +459,7 @@ var hostHandler = {
                 for (i = tags.length - 1; i >= 0; i--) {
                     if (tags[i].trim() === '<br>' ||
                         tags[i].trim() === ''
-                       ) {
+                    ) {
                         tags.splice(i, 1);
                     } else {
                         tags[i] = tags[i].trim();
@@ -476,7 +476,7 @@ var hostHandler = {
                 for (i = credits.length - 1; i >= 0; i--) {
                     if (credits[i].trim() === '<br>' ||
                         credits[i].trim() === ''
-                       ) {
+                    ) {
                         credits.splice(i, 1);
                     } else {
                         credits[i] = credits[i].trim();
@@ -505,7 +505,7 @@ var hostHandler = {
                 var source = $(this).attr('src');
                 if (source.split('//').length < 3 &&
                     !patt.test(source)
-                   ) {
+                ) {
                     source = 'https://' + source.split('//')[1];
                     source = source.split('=')[0];
                     obj.html = this;
@@ -533,7 +533,7 @@ var hostHandler = {
                 var source = $(this).attr('src');
                 if (source.split('//').length < 3 &&
                     !patt.test(source)
-                   ) {
+                ) {
                     source = 'http://' + source.split('//')[1];
                     source = source.split('=')[0];
                     obj.html = this;
