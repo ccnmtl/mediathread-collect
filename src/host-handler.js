@@ -181,8 +181,8 @@ var hostHandler = {
             };
             var getArtStorData = function(obj) {
                 $.ajax({
-                    url: 'http://' + location.hostname +
-                        '/library/secure/imagefpx/' +
+                    url: 'https://' + location.hostname +
+                        '/api/secure/imagefpx/' +
                         obj.artstorId + '/103/5',
                     dataType: 'json',
                     success: function(fpxdata) {
@@ -204,8 +204,8 @@ var hostHandler = {
                     }
                 });
                 $.ajax({
-                    url: 'http://' + location.hostname +
-                        '/library/secure/metadata/' +
+                    url: 'https://' + location.hostname +
+                        '/api/secure/metadata/' +
                         obj.artstorId,
                     dataType: 'json',
                     success: function(metadata) {
@@ -336,7 +336,7 @@ var hostHandler = {
                                 if (
                                     RegExp(
                                         'http://farm.*' + imageId)
-                                    .test(this.src)
+                                        .test(this.src)
                                 ) {
                                     img = this;
                                 }
