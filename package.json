@@ -15,6 +15,11 @@
     "eslint": "eslint src/*.js tests/*.js",
     "test": "mocha tests/ -t 5000"
   },
+  "greenkeeper": {
+    "ignore": [
+      "jsdom"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ccnmtl/mediathread-collect.git"
