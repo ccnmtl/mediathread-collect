@@ -47,16 +47,6 @@ describe('classpop.ccnmtl.columbia.edu', function() {
     });
 });
 
-describe('flickr.com', function() {
-    it('has the expected DOM', function(done) {
-        JSDOM.fromURL('https://www.flickr.com/photos/dropacat/15183956471/')
-            .then(dom => {
-                assert.ok(dom.window.document.getElementsByTagName('img').length > 0);
-                done();
-            });
-    });
-});
-
 describe('youtube.com', function() {
     it('has the expected DOM', function(done) {
         JSDOM.fromURL('https://www.youtube.com/watch?v=ZQhbB6-cT3Y')
