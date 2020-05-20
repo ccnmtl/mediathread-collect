@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "eslint": "^6.6.0",
-    "jsdom": "^11.0.0",
+    "jsdom": "^16.2.2",
     "mocha": "^7.0.1"
   },
   "scripts": {
