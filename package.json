@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^7.1.0",
     "jsdom": "^16.2.2",
     "mocha": "^7.1.2"
   },
