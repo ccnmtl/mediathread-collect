@@ -1,7 +1,5 @@
 # mediathread-collect
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/ccnmtl/mediathread-collect.svg)](https://greenkeeper.io/)
-
 [![Build Status](https://travis-ci.org/ccnmtl/mediathread-collect.svg?branch=master)](https://travis-ci.org/ccnmtl/mediathread-collect)
 
 Common code for the Chrome, Safari, and Firefox extensions for Mediathread.
