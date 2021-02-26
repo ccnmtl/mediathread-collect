@@ -1,6 +1,6 @@
 # mediathread-collect
 
-[![Build Status](https://travis-ci.org/ccnmtl/mediathread-collect.svg?branch=master)](https://travis-ci.org/ccnmtl/mediathread-collect)
+[![Actions Status](https://github.com/ccnmtl/mediathread-collect/workflows/build-and-test/badge.svg)](https://github.com/ccnmtl/mediathread-collect/actions)
 
 Common code for the Chrome, Safari, and Firefox extensions for Mediathread.
 
