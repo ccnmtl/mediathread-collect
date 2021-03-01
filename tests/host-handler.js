@@ -36,12 +36,12 @@ describe('blakearchive.org', function() {
     });
 });
 
-describe('classpop.ccnmtl.columbia.edu', function() {
+describe('classpop.ctl.columbia.edu', function() {
     it('has the expected DOM', function(done) {
-        JSDOM.fromURL('https://classpop.ccnmtl.columbia.edu/' +
-                      'content/perspectives-freedom-speech')
+        JSDOM.fromURL('https://classpop.ctl.columbia.edu/' +
+                      'freedomofspeech.html')
             .then(dom => {
-                assert.ok(dom.window.document.getElementById('currently_playing'));
+                assert.ok(dom.window.document.getElementById('the-video'));
                 done();
             });
     });
