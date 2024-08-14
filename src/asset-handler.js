@@ -797,7 +797,7 @@ var assetHandler = (function() {
                             },
                             error: hardWay
                         });
-                    } catch (ie_security_error) {
+                    } catch {
                         hardWay();
                     }
                     return rvZoomify;
@@ -974,14 +974,15 @@ var assetHandler = (function() {
                                     return callback([]);
                             }
                         }
-                    } catch (e) {/*parse error*/}
+
+                    } catch {/*parse error*/}
                 });
 
             for (var i = 0; i < frms.length; i++) {
                 try {
                     frms[i].contentWindow.postMessage(
                         '{"event":"info","id":"sherd' + i + '"}', '*');
-                } catch (e) {/*pass: probably security error*/}
+                } catch {/*pass: probably security error*/}
             }
         }
     };
