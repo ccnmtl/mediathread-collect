@@ -7,9 +7,7 @@
     "test": "tests"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.1.0",
-    "@eslint/js": "^9.9.0",
-    "eslint": "^9.9.0",
+    "eslint": "^9.18.0",
     "globals": "^15.9.0",
     "jsdom": "^25.0.0",
     "mocha": "^11.0.1"
