@@ -1,4 +1,3 @@
-/* eslint-env jquery */
 /* global hostHandler, assetHandler */
 /* global MediathreadCollect, collectPopupClickHandler, URI */
 
