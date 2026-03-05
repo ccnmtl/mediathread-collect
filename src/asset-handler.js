@@ -1,4 +1,3 @@
-/* eslint-env jquery, node */
 /* global MediathreadCollect */
 
 var assetHandler = (function() {
